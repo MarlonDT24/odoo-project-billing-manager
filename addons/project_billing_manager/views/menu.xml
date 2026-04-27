@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         MENÚ PRINCIPAL — Aparece en la barra de navegación
+         Usamos el menú de Proyecto como padre para integrarnos
+         de forma natural en la aplicación existente
+    ═══════════════════════════════════════════════════════════ -->
+    <menuitem
+        id="menu_billing_manager_root"
+        name="Facturación de Proyectos"
+        parent="project.menu_main_pm"
+        sequence="50"/>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         SUBMENÚ — Resúmenes de facturación
+    ═══════════════════════════════════════════════════════════ -->
+    <menuitem
+        id="menu_billing_summary"
+        name="Resúmenes de Facturación"
+        parent="menu_billing_manager_root"
+        action="billing_summary_action"
+        sequence="10"/>
+
+</odoo>

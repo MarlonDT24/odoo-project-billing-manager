@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="project_project_view_form_billing" model="ir.ui.view">
+        <field name="name">project.project.view.form.billing</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                <button name="action_view_invoices"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-file-text-o"
+                        invisible="invoice_count == 0">
+                    <field name="invoice_count" widget="statinfo"
+                           string="Facturas"/>
+                </button>
+            </xpath>
+
+            <xpath expr="//page[@name='settings']" position="after">
+                <page string="Facturación" name="billing">
+                    <group>
+                        <group string="Configuración">
+                            <field name="partner_id"/>
+                            <field name="hourly_rate"/>
+                            <field name="billing_status"
+                                   widget="badge"
+                                   decoration-success="billing_status == 'invoiced'"
+                                   decoration-warning="billing_status == 'pending'"
+                                   decoration-danger="billing_status == 'cancelled'"/>
+                        </group>
+                        <group string="Resumen">
+                            <field name="total_hours"/>
+                            <field name="billable_amount"/>
+                        </group>
+                    </group>
+                    <div class="mt-3">
+                        <button name="action_generate_invoice"
+                                type="object"
+                                string="Generar Factura"
+                                class="btn-primary"
+                                invisible="billing_status == 'invoiced'"/>
+                    </div>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

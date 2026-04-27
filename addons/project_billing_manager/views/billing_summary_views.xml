@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- VISTA ÁRBOL — Resumen de facturación -->
+    <record id="billing_summary_view_list" model="ir.ui.view">
+        <field name="name">project.billing.summary.view.list</field>
+        <field name="model">project.billing.summary</field>
+        <field name="arch" type="xml">
+            <tree string="Resúmenes de Facturación"
+                  decoration-success="state == 'paid'"
+                  decoration-warning="state == 'not_paid'"
+                  decoration-muted="state == 'reversed'">
+                <field name="date"/>
+                <field name="project_id"/>
+                <field name="partner_id"/>
+                <field name="hours_billed"/>
+                <field name="hourly_rate"/>
+                <field name="total_amount"/>
+                <field name="state"/>
+                <field name="invoice_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- VISTA FORMULARIO — Resumen de facturación -->
+    <record id="billing_summary_view_form" model="ir.ui.view">
+        <field name="name">project.billing.summary.view.form</field>
+        <field name="model">project.billing.summary</field>
+        <field name="arch" type="xml">
+            <form string="Resumen de Facturación">
+                <sheet>
+                    <group>
+                        <group string="Información del proyecto">
+                            <field name="project_id"/>
+                            <field name="partner_id"/>
+                            <field name="date"/>
+                        </group>
+                        <group string="Detalles de facturación">
+                            <field name="hours_billed"/>
+                            <field name="hourly_rate"/>
+                            <field name="total_amount"/>
+                            <field name="invoice_id"/>
+                            <field name="state"/>
+                        </group>
+                    </group>
+                    <group string="Notas">
+                        <field name="notes" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- VISTA BÚSQUEDA -->
+    <record id="billing_summary_view_search" model="ir.ui.view">
+        <field name="name">project.billing.summary.view.search</field>
+        <field name="model">project.billing.summary</field>
+        <field name="arch" type="xml">
+            <search string="Buscar resúmenes">
+                <field name="project_id"/>
+                <field name="partner_id"/>
+                <filter string="Pagadas"
+                        name="paid"
+                        domain="[('state', '=', 'paid')]"/>
+                <filter string="Pendientes"
+                        name="not_paid"
+                        domain="[('state', '=', 'not_paid')]"/>
+                <separator/>
+                <group expand="0" string="Agrupar por">
+                    <filter string="Proyecto"
+                            name="group_project"
+                            context="{'group_by': 'project_id'}"/>
+                    <filter string="Cliente"
+                            name="group_partner"
+                            context="{'group_by': 'partner_id'}"/>
+                    <filter string="Mes"
+                            name="group_month"
+                            context="{'group_by': 'date:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ACCIÓN -->
+    <record id="billing_summary_action" model="ir.actions.act_window">
+        <field name="name">Resúmenes de Facturación</field>
+        <field name="res_model">project.billing.summary</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="billing_summary_view_search"/>
+        <field name="context">{}</field>
+    </record>
+
+</odoo>

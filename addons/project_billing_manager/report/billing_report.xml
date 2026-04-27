@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_billing_summary_document">
+        <t t-call="web.external_layout">
+            <t t-foreach="docs" t-as="doc">
+                <div class="page">
+
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <h2>Resumen de Facturación</h2>
+                            <h3 t-field="doc.name"/>
+                        </div>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-6">
+                            <strong>Cliente: </strong>
+                            <span t-field="doc.partner_id.name"/>
+                        </div>
+                        <div class="col-6">
+                            <strong>Estado: </strong>
+                            <span t-field="doc.billing_status"/>
+                        </div>
+                    </div>
+
+                    <table class="table table-bordered mt-4">
+                        <thead>
+                            <tr>
+                                <th>Concepto</th>
+                                <th class="text-end">Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Total horas trabajadas</td>
+                                <td class="text-end">
+                                    <span t-field="doc.total_hours"/>h
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Tarifa por hora</td>
+                                <td class="text-end">
+                                    <span t-esc="doc.hourly_rate"/> €
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Importe facturable total</strong></td>
+                                <td class="text-end">
+                                    <strong>
+                                        <span t-esc="doc.billable_amount"/> €
+                                    </strong>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h4 class="mt-4">Detalle de horas trabajadas</h4>
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Empleado</th>
+                                <th>Descripción</th>
+                                <th class="text-end">Horas</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="doc.timesheet_ids" t-as="line">
+                                <tr>
+                                    <td><span t-field="line.date"/></td>
+                                    <td><span t-field="line.employee_id.name"/></td>
+                                    <td><span t-field="line.name"/></td>
+                                    <td class="text-end">
+                                        <span t-field="line.unit_amount"/>h
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+
+                </div>
+            </t>
+        </t>
+    </template>
+
+</odoo>

@@ -27,10 +27,13 @@ completo de facturación de proyectos directamente desde Odoo:
 | Seguridad | `ir.model.access.csv` con roles diferenciados |
 
 ## Estructura del módulo
+
+```
 project_billing_manager/
-├── manifest.py
-├── init.py
+├── __manifest__.py
+├── __init__.py
 ├── models/
+│   ├── __init__.py
 │   ├── project_project.py      # Herencia + lógica de facturación
 │   └── billing_summary.py      # Modelo propio de historial
 ├── views/
@@ -41,7 +44,8 @@ project_billing_manager/
 │   ├── billing_report.xml
 │   └── billing_report_action.xml
 └── security/
-└── ir.model.access.csv
+    └── ir.model.access.csv
+```
 
 ## Instalación
 
